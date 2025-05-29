@@ -3,10 +3,19 @@
  * Validates ascending order of three numbers and displays the result
  */
 
+// Global variable to track remaining validation attempts
+let remainingAttempts = 20;
+
 /**
  * Validates the three input numbers
  */
 function validateNumbers() {
+    // Check if attempts are remaining
+    if (remainingAttempts <= 0) {
+        displayResult('検証回数の上限に達しました', 'failure');
+        return;
+    }
+    
     // Get input values
     const value1 = parseFloat(document.getElementById('value1').value);
     const value2 = parseFloat(document.getElementById('value2').value);
@@ -17,6 +26,10 @@ function validateNumbers() {
         displayResult('すべての欄に数値を入力してください', 'failure');
         return;
     }
+    
+    // Decrease remaining attempts
+    remainingAttempts--;
+    updateRemainingCount();
     
     // validation: value1 < value2 < value3
     const isValid = value1 < value2 && value2 < value3;
@@ -35,6 +48,30 @@ function validateNumbers() {
     
     // Display the result
     displayResult(message, messageClass);
+    
+    // Disable button if no attempts remaining
+    if (remainingAttempts <= 0) {
+        const validateBtn = document.getElementById('validateBtn');
+        validateBtn.disabled = true;
+        displayResult('検証回数の上限に達しました。これ以上検証できません。', 'failure');
+    }
+}
+
+/**
+ * Updates the remaining count display
+ */
+function updateRemainingCount() {
+    const remainingCountElement = document.getElementById('remainingCount');
+    remainingCountElement.textContent = `残り回数: ${remainingAttempts}`;
+    
+    // Change color when attempts are low
+    if (remainingAttempts <= 5) {
+        remainingCountElement.style.color = '#d32f2f';
+    } else if (remainingAttempts <= 10) {
+        remainingCountElement.style.color = '#f57c00';
+    } else {
+        remainingCountElement.style.color = '#666';
+    }
 }
 
 /**

@@ -103,6 +103,22 @@
             border-left: 4px solid #2196F3;
             line-height: 1.6;
         }
+        
+        .remaining-count {
+            margin-left: 15px;
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+        }
+        
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        button:disabled:hover {
+            background-color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -122,7 +138,8 @@
         </div>
         
         <div class="validate-section">
-            <button onclick="validateNumbers()">Validate</button>
+            <button onclick="validateNumbers()" id="validateBtn">Validate</button>
+            <span id="remainingCount" class="remaining-count">残り回数: 20</span>
         </div>
         
         <div class="results" id="results">
